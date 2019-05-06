@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% from "bootstrap/form.html" import render_form %}
+
+
+{% block title %}简微博 - 发布微博{% endblock %}
+
+{% block page_content %}
+    {% include "_posts.html" %}
+    <h3 id="comments">评论</h3>
+    {% if current_user.can('COMMENT') %}
+        <div class="comment-form">
+            {{ render_form(form, button_map={'submit': 'primary'}) }}
+        </div>
+    {% endif %}
+    {% include '_comments.html' %}
+    {% if pagination %}
+        <div class="pagination">
+            {{ render_pagination(pagination, 'main.post', fragment='#comments', id=posts[0].id) }}
+        </div>
+    {% endif %}
+{% endblock %}
